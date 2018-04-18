@@ -1,0 +1,104 @@
+﻿@model BookRental.ViewModel.OrderIHave
+@using BookRental.Models;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+
+    <title>Login/Register</title>
+    
+    <style type="text/css">
+        h1 {
+            font-family: 'Gabo Drive', Helvetica, sans-serif;
+        }
+        i{
+            font-family: LeagueGothicExtended, Helvetica, sans-serif;
+        }
+        .container {
+            position: relative;
+            text-align: center;
+            color: black;
+        }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .field-validation-error {
+            color: red;
+        }
+        div.sticky {
+            position: relative;
+            text-align:center;
+            width: 500px;
+            height: 250px;
+            bottom: 0px;
+            left:35%;
+            border: 3px solid #397CB5;
+        } 
+
+        button {
+            background-color: #397CB5;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+                opacity: 0.8;
+         }
+    </style>
+
+
+</head>
+
+
+
+<body>
+
+    <div class="sticky" align="center">
+        <h1 style="border:1px; color:black;" align="center"><u>Register </u></h1><br />
+        @using (Html.BeginForm("AddUser", "Home", FormMethod.Post))
+        {
+            <div>
+                <i style="color:black">Select Username: </i>@Html.TextBoxFor(f => f.order.Username) @Html.ValidationMessageFor(s => s.order.Username)
+                <br /><br />
+                <i style="color:black">Select OrderID: </i>@Html.TextBoxFor(f => f.order.Password) @Html.ValidationMessageFor(s => s.order.Password)
+                <br /><br />
+                <button id="Submit1" type="submit">Register</button>
+            </div>
+        }
+    </div>
+    <br/>
+    <div class="sticky" align="center" >
+        <h1 style="border:1px; color:black;" align="center"><u>Login / New Order </u></h1><br />
+        @using (Html.BeginForm("AddOrder", "Home", FormMethod.Post))
+        {
+            <div>
+                <i style="color:black">Enter Username: </i><input id="Text1" type="text" name="order.Username1"/> @Html.ValidationMessageFor(x => x.order.Username)
+                <br /><br />
+                <i style="color:black">Enter OrderID: </i><input id="Text2" type="text" name="order.Password1" /> @Html.ValidationMessageFor(x => x.order.Password)
+                <br /><br />
+                <button id="Submit2" type="submit">SIGN IN</button>
+
+            </div>
+        }
+    </div>
+</body>
+</html>

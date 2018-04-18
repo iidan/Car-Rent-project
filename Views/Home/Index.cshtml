@@ -1,0 +1,114 @@
+﻿@model BookRental.ViewModel.CarsInStock
+@using BookRental.Models;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+
+    <title>Rent my car</title>
+    <style type="text/css">
+
+            ul {
+                list-style-type: none;
+                margin:0 auto;
+                padding: 0;
+                overflow: hidden;
+                background-color: #333;
+                width:962px;
+            }
+
+            li {
+                float: left;
+            }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                display:block;
+                width:160px;
+            }
+
+            li a:hover:not(.active) {
+                background-color: #111;
+            }
+
+            body {
+            font-family: capriola, helvetica, sans-serif;
+            }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+                text-align: left;
+            }
+            table#t01 tr:nth-child(even) {
+                background-color: #eee;
+            }
+            table#t01 tr:nth-child(odd) {
+               background-color:#fff;
+            }
+            table#t01 th {
+                background-color: black;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href='javascript:window.open("LoginCustomer" ,"contestrules", "menubar=0,resizable=0,width=450,height=600");'><i class="glyphicon glyphicon-user"> SignIn</i></a></li>      
+        <li><a href="~/Home/NewOrderUser">New Order</a></li>
+    </ul>
+    <p style="text-align:center;"><img src="~/Image/5.jpg" alt="This my new web" style="width:962px; height:450px;" /></p>
+
+    <p style="text-align:center;"><img src="~/Image/Sticker.png" alt="This my new web" style="width:962px; height:80px; padding:unset" /></p>
+    <table style="width:50%" align="center" id="t01">
+        <tr>
+            <th>Car ID</th>
+            <th>Car Type</th>
+            <th>Car Class</th>
+            <th>Available</th>
+        </tr>
+    </table>
+    <script language="javascript">
+
+        // get the (objects) table from the controller by json 
+        $.get("getCarsByJson", null, BindData);
+
+        function BindData(cars) {
+            var tbl = $("#t01")
+            for (i = 0 ; i < cars.length ; i++) {
+                var newRow = "<tr>" +
+                "<td>" + cars[i].CarID + "</td>"+
+                "<td>" + cars[i].CarType + "</td>"+
+                "<td>" + cars[i].CarClass + "</td>"+
+                "<td>" + cars[i].Available + "</td>"+
+                "</tr>"
+                tbl.append(newRow);
+            }
+        }
+    </script>
+
+</body>
+</html>

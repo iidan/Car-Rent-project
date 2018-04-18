@@ -1,0 +1,88 @@
+﻿@model BookRental.ViewModel.LoginUsers
+@using BookRental.Models;
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CustomerOrder</title>
+    <style type="text/css">
+                    table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+                text-align: left;
+            }
+            #submission {
+              text-align: center;
+              }
+            #lop::before{
+                counter-increment: section;
+                content: "button " counter(section) ": ";
+            }
+    </style>
+
+</head>
+<body>
+    <div>
+        <h1 style="border:1px; color:cornflowerblue;" align="center"><u>Update/Delete My Orders</u></h1>
+    </div>
+    @using (Html.BeginForm("UpdateOrder", "Home", FormMethod.Post))
+    {
+        <table style="width:50%" align="center" id="t01">
+            <tr>
+                <th>Visa Number</th>
+                <th>My CustomerID</th>
+                <th>My OderID</th>
+                <th>My StartDate</th>
+                <th>My EndDate</th>
+                <th>My Car</th>
+            </tr>
+
+            @foreach (Login obj in Model.users)
+            {
+
+                if (obj.OrderID == (string)TempData["MyOrder2"])
+                {
+                    <tr>
+                        <td>@obj.Visa</td>
+                        <td>@obj.OrderID<input id="Hidden1" type="hidden" name="user.OrderID" value="@obj.ID" /></td>
+                        <td>@obj.ID</td>
+                        <td>@obj.StartDate</td>
+                        <td>@obj.EndDate</td>
+                        <td>@obj.CarSelect</td>
+                    </tr>
+                    
+                }
+
+            }
+
+    `    </table>
+        <br/>
+        <div id="submission">
+            <i>Insert Order ID to Update</i><input id="Text1" type="text" name="GetIDtext"/>
+            <i><input type="date" id="startDate" name="startDate1" /></i>
+            <i><input type="date" id="startDate" name="endDate1" /></i>
+            <input class="button" id="Submit12" type="submit" value="Update" name="Update" />
+        </div>
+    }
+    <br />
+
+    @using (Html.BeginForm("Delete", "Home", FormMethod.Post))
+    {
+        <div id="submission">
+            <i>Insert Order ID to Delete</i><input id="Text2" type="text" name="GetIDtext2" />
+            <input class="button" id="Submit2" type="submit" value="Delete Order" name="Delete" />
+        </div>
+    }
+
+</body>
+</html>

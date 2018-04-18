@@ -1,0 +1,52 @@
+﻿@model BookRental.ViewModel.CarsInStock
+@using BookRental.Models;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SelectVehicle</title>
+
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    @using (Html.BeginForm("OrderComplete", "Home", FormMethod.Post))
+    {
+            <table style="width:50%" align="center" id="t01">
+                <tr>
+                    <th>Car ID</th>
+                    <th>Car Type</th>
+                    <th>Car Class</th>
+                    <th>Available</th>
+                    <th>Select Car</th>
+                </tr>
+                @foreach (Cars obj in Model.cars)
+                {
+                    <tr>
+                        <td>@obj.CarID</td>
+                        <td>@obj.CarType</td>
+                        <td>@obj.CarClass</td>
+                        <td>@obj.Available</td>
+                        <td><input id="Button1 @obj.CarID" type="submit" value="SELECT" name="@obj.CarID" /></td>
+                    </tr>
+                }
+            </table>
+    }
+</div>
+</body>
+</html>

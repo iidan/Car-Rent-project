@@ -1,0 +1,94 @@
+﻿@model BookRental.Models.MyOrder
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .field-validation-error {
+            color:red;
+        }
+        button {
+            background-color: #397CB5;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            button:hover {
+                opacity: 0.8;
+            }
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+        }
+    </style>
+
+
+</head>
+
+
+
+
+<body>
+    <div>
+        <h2>Login Form</h2>
+
+
+        @using (Html.BeginForm("Submit", "Home", FormMethod.Post))
+        {
+
+            <div class="imgcontainer">
+                <img src="~/Image/userLog.png" alt="Avatar" class="avatar">
+            </div>
+            <div class="container">
+                <label for="uname"><b>Username</b></label>
+                @Html.TextBoxFor(m => m.Username) @Html.ValidationMessageFor(x => x.Username)<br/>
+
+                <label for="psw"><b>OrderID</b></label>
+                @Html.TextBoxFor(m => m.Password) @Html.ValidationMessageFor(x => x.Password)
+
+                <button type="submit">Login</button>
+            </div>
+        }
+    </div>
+
+</body>
+</html>
+ 

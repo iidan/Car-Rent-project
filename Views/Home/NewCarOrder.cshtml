@@ -1,0 +1,153 @@
+﻿@model BookRental.ViewModel.LoginUsers
+@using BookRental.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+
+        <title>New Car Order</title>
+
+        <style type="text/css">
+            .container {
+                position: relative;
+                text-align: center;
+                color: black;
+            }
+            .centered {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .field-validation-error {
+                color: red;
+            }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+                text-align: left;
+            }
+        </style>
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+        <script src="~/Scripts/angular.js"></script>
+        <script>
+
+            var app = angular.module("MyUser", []);
+            app.controller("UserViewModel", function ($scope,$http)
+            {
+                // get the json  
+                $scope.Orders = {
+                    "MyVisa": "",
+                    "OrderID": "",
+                    "OrderID2": "",
+                    "startDate": "",
+                    "endDate": "",
+                    "MyVisaColorID": "",
+                    "MyOrderColorID": ""
+                };
+
+                // Change color to the OrderID if It's small form 5 , or bigger than 5.
+                $scope.GetColor = function (Number) {
+                    if (Number == 0)
+                        return "";
+                    else if (Number.length >= 5 && Number.length <= 10)
+                        return "Green";
+                    else
+                        return "Red";
+                };
+
+                //Check the the length of the OrderID
+                $scope.$watch("Orders.MyVisa", function () {
+                    $scope.Orders.MyVisaColorID = $scope.GetColor($scope.Orders.MyVisa);
+                });
+
+                $scope.GetColor2 = function (Number1) {
+                    if (Number1 == 0)
+                        return "";
+                    else if (Number1.length == 5)
+                        return "Green";
+                    else
+                        return "Red";
+                };
+
+                //Check the the length of the OrderID
+                $scope.$watch("Orders.OrderID2", function () {
+                    $scope.Orders.MyOrderColorID = $scope.GetColor2($scope.Orders.OrderID2);
+                });
+
+                //Make call to the server and insert data by json.
+                $scope.Add = function () {
+                    $http({ method:"POST", data: $scope.Orders, url:"SubmitOrder" }).
+                    success(function (data, status, headers, config) {
+                        //load orders table
+                    });
+                };
+            });
+        </script>
+    </head>
+
+
+    <body ng-app="MyUser">
+        <div  ng-controller="UserViewModel" align="center" >
+            @using (Html.BeginForm("SubmitOrder", "Home", FormMethod.Post))
+            {
+                <div>
+                    @*change the textbox color with angularjs function that we made.*@
+                    <i style="color:black">My Visa: (10 digit)</i> <input ng-model="Orders.MyVisa" id="MyVisa"  style="background-color:{{Orders.MyVisaColorID}}" type="text" name="user.Visa" /> @Html.ValidationMessageFor(x => x.user.Visa)
+                    <br/>
+                    <input id="Hidden1" type="hidden" value="@TempData["SaveId"]"  ng-model="Orders.OrderID"  name="user.OrderID"/>
+                    <i style="color:black">Select Order Key:</i> <input  style="background-color:{{Orders.MyOrderColorID}}" ng-model="Orders.OrderID2" id="OrderID2" type="text"  name="user.OrderID2"/>
+                    <br />
+                    <i style="color:black">Start Date:</i> <input type="date" ng-model="Orders.startDate" id="startDate" name="startDate1">
+                    <br />
+                    <i style="color:black">End Date:</i> <input type="date" ng-model="Orders.endDate" id="endDate" name="endDate1">
+                    <br /><br />
+                    <input id="button1" type="submit" value="Order Now")"/>
+                </div>
+            }
+        </div>
+        <br/>
+
+
+
+        <h1 style="text-align:center">Orders Table</h1>
+        <table style="width:50%" align="center" id="t01">
+            <tr>
+                <th>OrderID</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>CarSelect</th>
+
+            </tr>
+        </table>
+        <script language="javascript">
+
+            // get the (objects) table from the controller by json
+            $.get("getOrdersByJson", null, BindData);
+
+            function BindData(orders) {
+                var tbl = $("#t01")
+                for (i = 0 ; i < orders.length ; i++) {
+                    var newRow = "<tr>" +
+                    "<td>" + orders[i].ID + "</td>" +
+                    "<td>" + orders[i].StartDate + "</td>" +
+                    "<td>" + orders[i].EndDate + "</td>" +
+                    "<td>" + orders[i].CarSelect + "</td>" +
+                    "</tr>"
+                    tbl.append(newRow);
+                }
+            }
+        </script>
+    </body>
+</html>
